@@ -18,12 +18,11 @@ const greatVibes = Great_Vibes({
   display: 'swap',
 });
 
-// Menyusun metadata tanpa themeColor di sini
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sweetlovebakery.com'), // Tambahkan metadataBase
+  metadataBase: new URL('https://sweetlovebakery.com'),
   title: {
     default: 'Sweet Love Bakery',
-    template: '%s | Sweet Love Bakery'
+    template: '%s | Sweet Love Bakery',
   },
   description: 'Toko kue spesial dengan sentuhan romantis untuk setiap momen berharga',
   keywords: ['kue romantis', 'valentine cake', 'anniversary cake', 'toko kue spesial'],
@@ -53,32 +52,27 @@ export const metadata: Metadata = {
       { url: '/favicon.ico' },
       { url: '/icon.png', type: 'image/png', sizes: '32x32' },
     ],
-    apple: [
-      { url: '/apple-icon.png' },
-    ],
+    apple: [{ url: '/apple-icon.png' }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="id" className={`${inter.variable} ${greatVibes.variable}`}>
       <head>
-        {/* Menambahkan themeColor dalam tag meta di head */}
+        {/* Meta theme color untuk browser mobile dan desktop */}
         <meta name="theme-color" content="#f43f5e" />
       </head>
       <body className="font-sans bg-rose-50 text-rose-900 antialiased min-h-screen flex flex-col">
         {children}
-        
-        <script type="application/ld+json">
-          {JSON.stringify({
+
+        {/* Structured data JSON-LD untuk SEO */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Bakery",
             "name": "Sweet Love Bakery",
-            "image": "/images/logo.png",
+            "image": "/images/logo/logo.png",
             "url": "https://sweetlovebakery.com",
             "telephone": "+628123456789",
             "address": {
@@ -88,8 +82,8 @@ export default function RootLayout({
               "postalCode": "12345",
               "addressCountry": "ID"
             }
-          })}
-        </script>
+          })
+        }} />
       </body>
     </html>
   );

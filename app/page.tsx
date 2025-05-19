@@ -1,34 +1,46 @@
-'use client'; // Menandakan bahwa komponen ini adalah komponen sisi klien
+'use client';
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 
-// Impor komponen tanpa SSR (Client Component)
 const SpecialOfferBanner = dynamic(() => import('@/components/main/SpecialOfferBanner'), { ssr: false });
 
 import RomanticNavbar from '@/components/main/RomanticNavbar';
 import ProductCard from '@/components/main/ProductCard';
 import HeartFooter from '@/components/main/HeartFooter';
 import TestimonialCard from '@/components/main/TestimonialCard';
-import { getFeaturedProducts, getTestimonials } from '@/lib/products';
 import RomanticButton from '@/components/ui/RomanticButton';
-import { FaHeart, FaArrowRight } from 'react-icons/fa';
+import LogoLoading from '@/components/ui/LogoLoading';
 
 const HomePage: React.FC = () => {
-  const [isClient, setIsClient] = useState(false); // Untuk memeriksa apakah ini di klien
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Gunakan useEffect untuk menunggu hingga komponen selesai dimuat di klien
   useEffect(() => {
-    setIsClient(true); // Set setelah komponen dimuat di klien
+    async function fetchData() {
+      try {
+        const [productsRes, testimonialsRes] = await Promise.all([
+          fetch('/api/featured-products'),
+          fetch('/api/testimonials'),
+        ]);
+
+        const productsData = await productsRes.json();
+        const testimonialsData = await testimonialsRes.json();
+
+        setFeaturedProducts(productsData);
+        setTestimonials(testimonialsData);
+      } catch (error) {
+        console.error('Failed to fetch data', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
   }, []);
 
-  const featuredProducts = getFeaturedProducts();
-  const testimonials = getTestimonials();
-
-  if (!isClient) {
-    return null; // Mencegah rendering di server
-  }
+  if (loading) return <LogoLoading />;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -68,19 +80,21 @@ const HomePage: React.FC = () => {
         <SpecialOfferBanner />
 
         {/* Featured Products */}
-        <section className="py-16 px-4 container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-rose-800 mb-4">Kue Spesial Kami</h2>
-            <div className="w-24 h-1 bg-rose-400 mx-auto"></div>
+        <section className="py-12 px-2 sm:px-4 container mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl sm:text-3xl font-bold text-rose-800 mb-4">Kue Spesial Kami</h2>
+            <div className="w-20 sm:w-24 h-1 bg-rose-400 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {featuredProducts.map((product: any) => (
+              <div key={product.id} className="w-full max-w-xs mx-auto">
+                <ProductCard product={product} />
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-10">
             <Link href="/main/products">
               <RomanticButton size="lg" icon="arrow" animate="float">
                 Lihat Semua Produk
@@ -88,6 +102,7 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
         </section>
+
 
         {/* Testimonials */}
         <section className="py-16 px-4 container mx-auto">
@@ -99,7 +114,7 @@ const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.slice(0, 3).map((testimonial) => (
+            {testimonials.slice(0, 3).map((testimonial: any) => (
               <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             ))}
           </div>

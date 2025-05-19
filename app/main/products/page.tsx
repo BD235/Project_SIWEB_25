@@ -1,9 +1,12 @@
 import RomanticNavbar from '@/components/main/RomanticNavbar';
 import ProductCard from '@/components/main/ProductCard';
 import HeartFooter from '@/components/main/HeartFooter';
-import { allProducts } from '@/lib/products';
+import { getProducts } from '@/lib/queries/getProducts';
+import { space } from 'postcss/lib/list';
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
     <div className="min-h-screen bg-rose-50">
       <RomanticNavbar />
@@ -22,17 +25,17 @@ export default function ProductsPage() {
             </div>
             <div className="w-full md:w-1/2 flex justify-end">
               <select className="p-3 border border-rose-300 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500 text-rose-800">
-                <option>Urutkan Berdasarkan</option>
-                <option>Harga: Terendah ke Tertinggi</option>
-                <option>Harga: Tertinggi ke Terendah</option>
-                <option>Paling Populer</option>
-                <option>Terbaru</option>
+                <option>Urutkan Berdasarkan  </option>
+                <option>Terendah ke Tertinggi </option>
+                <option>Tertinggi ke Terendah  </option>
+                <option>Paling Populer  </option>
+                <option>Terbaru  </option>
               </select>
             </div>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {allProducts.map(product => (
+            {products.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

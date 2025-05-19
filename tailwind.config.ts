@@ -18,15 +18,24 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
-    },
-    keyframes: {
-      shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
+      keyframes: {
+        shimmer: {
+          '100%': {
+            transform: 'translateX(100%)',
+          },
         },
+        spinSlow: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 1.5s infinite',
+        'spin-slow': 'spinSlow 3s linear infinite', // animasi spin dengan durasi 3 detik
       },
     },
   },
   plugins: [require('@tailwindcss/forms')],
 };
+
 export default config;

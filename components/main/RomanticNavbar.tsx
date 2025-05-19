@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function RomanticNavbar() {
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
         <div className="flex justify-between h-20 items-center">
           <div className="flex items-center">
             <Link href="/main/home" className="flex items-center">
