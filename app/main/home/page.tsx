@@ -86,8 +86,8 @@ const HomePage: React.FC = () => {
             <div className="w-24 h-1 bg-rose-400 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product: any) => (
+          <div className="grid grid-cols-3 gap-8">
+            {featuredProducts.slice(0, 3).map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
@@ -100,6 +100,8 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
         </section>
+
+
 
         {/* Testimonials */}
         <section className="py-16 px-4 container mx-auto">

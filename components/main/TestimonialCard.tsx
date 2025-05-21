@@ -17,14 +17,15 @@ export default function TestimonialCard({ testimonial }: { testimonial: Testimon
       <div className="flex items-start mb-4">
         <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4 border-2 border-rose-200">
           {testimonial.image ? (
-            <Image
-              src={testimonial.image}
-              alt={testimonial.name}
-              fill
-              className="object-cover"
-              sizes="48px"
-              priority
-            />
+          <Image
+            src={testimonial.image ? `/${testimonial.image}` : '/default-image.png'}
+            alt={testimonial.name}
+            fill
+            className="object-cover"
+            sizes="48px"
+            priority
+          />
+
           ) : (
             <div className="bg-rose-100 h-full w-full flex items-center justify-center text-rose-600">
               {testimonial.name.charAt(0)}

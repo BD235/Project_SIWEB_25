@@ -204,3 +204,14 @@
     clear: both;
   }
 }
+
+/* app/globals.css */
+
+.skeleton {
+  @apply relative overflow-hidden bg-gray-100;
+}
+
+.skeleton::before {
+  @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent;
+  content: '';
+}

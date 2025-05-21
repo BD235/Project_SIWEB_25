@@ -80,21 +80,18 @@ const HomePage: React.FC = () => {
         <SpecialOfferBanner />
 
         {/* Featured Products */}
-        <section className="py-12 px-2 sm:px-4 container mx-auto">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-rose-800 mb-4">Kue Spesial Kami</h2>
-            <div className="w-20 sm:w-24 h-1 bg-rose-400 mx-auto"></div>
+        <section className="py-16 px-4 container mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-rose-800 mb-4">Kue Spesial Kami</h2>
+            <div className="w-24 h-1 bg-rose-400 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredProducts.map((product: any) => (
-              <div key={product.id} className="w-full max-w-xs mx-auto">
-                <ProductCard product={product} />
-              </div>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
-
-          <div className="text-center mt-10">
+          <div className="text-center mt-12">
             <Link href="/main/products">
               <RomanticButton size="lg" icon="arrow" animate="float">
                 Lihat Semua Produk
@@ -102,7 +99,6 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
         </section>
-
 
         {/* Testimonials */}
         <section className="py-16 px-4 container mx-auto">
