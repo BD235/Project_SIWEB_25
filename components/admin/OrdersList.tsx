@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { FaSearch, FaFileExport } from 'react-icons/fa';
-import Loading from '@/app/admin/loading';
+import OrdersPageSkeleton from '@/components/admin/OrdersPageSkeleton';
 
 
 interface Order {
@@ -17,23 +17,26 @@ export default function OrdersList() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('/api/orders')
-      .then(res => res.json())
-      .then(data => {
-        const formatted = data.map((order: any) => ({
-          id: order.order_id.toString(),
-          customer: order.nama_customer,
-          date: new Date(order.order_date).toISOString().split('T')[0],
-          total: order.total,
-          status: order.status,
-        }));
-        setOrders(formatted);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+    useEffect(() => {
+      fetch('/api/orders')
+        .then(res => res.json())
+        .then(data => {
+          const formatted = data.map((order: any) => ({
+            id: order.order_id.toString(),
+            customer: order.nama_customer,
+            date: new Date(order.order_date).toISOString().split('T')[0],
+            total: order.total,
+            status: order.status,
+          }));
+          setOrders(formatted);
+        })
+        .finally(() => {
+          // Delay 2 detik sebelum setLoading(false)
+          setTimeout(() => setLoading(false), 2000);
+        });
+    }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <OrdersPageSkeleton />;
 
   return (
     <>

@@ -1,3 +1,5 @@
+// app/admin/dashboard/page.tsx
+
 'use client';
 
 import React, { Suspense } from 'react';
@@ -14,3 +16,4 @@ export default function AdminDashboardPage() {
     </AdminLayout>
   );
 }
+  

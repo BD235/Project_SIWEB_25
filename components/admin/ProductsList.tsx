@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Loading from '@/app/admin/loading';
+import AdminProductsSkeleton from '@/components/admin/AdminProductsSkeleton';
 
 interface Product {
   id: number; // number type, not string
@@ -25,7 +25,7 @@ export default function ProductsList() {
       .finally(() => setLoading(false));
   }, []);
 
-    if (loading) return <Loading />;
+  if (loading) return <AdminProductsSkeleton />;
 
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden">
