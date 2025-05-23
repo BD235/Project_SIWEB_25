@@ -11,8 +11,8 @@ export default async function ProductsPage() {
     <div className="min-h-screen bg-rose-50">
       <RomanticNavbar />
       
-      <main className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+      <main className="py-12">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <h1 className="text-3xl font-bold text-rose-800 mb-8 text-center">Koleksi Kue Romantis Kami</h1>
           
           <div className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -25,11 +25,11 @@ export default async function ProductsPage() {
             </div>
             <div className="w-full md:w-1/2 flex justify-end">
               <select className="p-3 border border-rose-300 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-500 text-rose-800">
-                <option>Urutkan Berdasarkan  </option>
-                <option>Terendah ke Tertinggi </option>
-                <option>Tertinggi ke Terendah  </option>
-                <option>Paling Populer  </option>
-                <option>Terbaru  </option>
+                <option>Urutkan Berdasarkan</option>
+                <option>Terendah ke Tertinggi</option>
+                <option>Tertinggi ke Terendah</option>
+                <option>Paling Populer</option>
+                <option>Terbaru</option>
               </select>
             </div>
           </div>
@@ -41,6 +41,7 @@ export default async function ProductsPage() {
           </div>
         </div>
       </main>
+
 
       <HeartFooter />
     </div>
