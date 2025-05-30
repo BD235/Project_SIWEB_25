@@ -29,7 +29,7 @@ export default function ProductsList({ query = '', currentPage = 1 }: ProductsLi
       try {
         const searchParams = new URLSearchParams({
           page: currentPage.toString(),
-          limit: '10',
+          limit: '5',
           ...(query && { query }),
         });
 
