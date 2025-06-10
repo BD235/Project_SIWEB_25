@@ -44,11 +44,11 @@ export default function AdminSidebar() {
               </Link>
               
               <Link
-                href="/admin/orders"
-                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${isActive('orders') ? 'bg-rose-900 text-white' : 'text-rose-200 hover:bg-rose-700 hover:text-white'}`}
+                href="/admin/transaction"
+                className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${isActive('transaction') ? 'bg-rose-900 text-white' : 'text-rose-200 hover:bg-rose-700 hover:text-white'}`}
               >
                 <FaShoppingCart className={`mr-3 flex-shrink-0 ${isActive('orders') ? 'text-white' : 'text-rose-300'}`} />
-                Orders
+                Transactions
               </Link>
             </nav>
           </div>
