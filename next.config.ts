@@ -1,34 +1,16 @@
+// next.config.ts
+import { NextConfig } from 'next';
 
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
       // Fallbacks untuk browser environment
       config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        crypto: false,
-        stream: false,
-        url: false,
-        zlib: false,
-        http: false,
-        https: false,
-        assert: false,
-        os: false,
-        path: false,
-        pg: false,
-        'pg-hstore': false,
+        // Add your fallbacks here
       };
     }
-    return config;
+    return config; // Don't forget to return the modified config
   },
-  // External packages yang tidak di-bundle untuk client
-  experimental: {
-    serverComponentsExternalPackages: ['pg', 'pg-hstore', 'pg-pool']
-  }
 };
 
-module.exports = nextConfig;
+export default nextConfig;
