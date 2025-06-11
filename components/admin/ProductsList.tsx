@@ -1,4 +1,3 @@
-// ===== FIXED: components/admin/ProductsList.tsx =====
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
@@ -207,7 +206,7 @@ export default function ProductsList({ query = '', currentPage = 1 }: ProductsLi
                         <DeleteProductButton 
                           id={product.id} 
                           name={product.name} 
-                          onDelete={fetchProducts}
+                          onDelete={handleProductDelete}
                         />
                       </div>
                     </td>
@@ -221,7 +220,12 @@ export default function ProductsList({ query = '', currentPage = 1 }: ProductsLi
 
       {totalPages > 1 && (
         <div className="flex justify-center">
-          <Pagination totalPages={totalPages} />
+          <Pagination
+            currentPage={currentPage} // Pass the current page
+            totalPages={totalPages} // Pass the total pages
+            baseUrl="/admin/products" // Set the base URL for pagination links
+            searchParams={query ? { query } : {}} // Pass search parameters if available
+          />
         </div>
       )}
     </div>

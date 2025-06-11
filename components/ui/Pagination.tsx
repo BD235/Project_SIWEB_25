@@ -6,18 +6,19 @@ import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
-  totalPages: number;
+  currentPage: number; // Add currentPage
+  totalPages: number; // Keep totalPages
+  baseUrl: string; // Add baseUrl
+  searchParams?: Record<string, string>; // Optional search parameters
 }
 
-export default function Pagination({ totalPages }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, baseUrl, searchParams }: PaginationProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
+    return `${baseUrl}?${params.toString()}`;
   };
 
   const generatePagination = (currentPage: number, totalPages: number) => {
