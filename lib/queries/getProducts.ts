@@ -72,7 +72,6 @@ export async function getAllProducts() {
         name,
         price
       FROM products 
-      WHERE is_deleted = false
       ORDER BY name ASC
     `);
 

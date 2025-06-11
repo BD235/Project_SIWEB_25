@@ -29,7 +29,7 @@ export async function createTransaction(formData: FormData) {
     const productCheckQuery = `
       SELECT id, name, price 
       FROM products 
-      WHERE id = $1 AND is_deleted = false
+      WHERE id = $1
     `;
     
     const productResult = await query(productCheckQuery, [data.id_produk]);
