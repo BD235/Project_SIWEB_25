@@ -14,6 +14,7 @@ interface RomanticButtonProps {
   className?: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean; // Add the disabled prop here
 }
 
 export default function RomanticButton({
@@ -26,6 +27,7 @@ export default function RomanticButton({
   className = '',
   onClick,
   type = 'button',
+  disabled = false, // Add disabled to the destructured props and set a default value
 }: RomanticButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
@@ -70,11 +72,11 @@ export default function RomanticButton({
       tap: { scale: 0.95 },
     },
     float: {
-      hover: { 
+      hover: {
         y: -3,
-        transition: { 
+        transition: {
           y: { duration: 0.3, repeat: Infinity, repeatType: "reverse", ease: "easeOut" }
-        } 
+        }
       },
       tap: { y: 0 }
     },
@@ -100,12 +102,14 @@ export default function RomanticButton({
       onHoverEnd={() => setIsHovered(false)}
       onClick={handleClick}
       type={type}
+      disabled={disabled} // Add the disabled prop to the button
       className={`
         rounded-full font-medium flex items-center justify-center transition-all
         ${variants[variant]}
         ${sizes[size]}
         ${fullWidth ? 'w-full' : 'w-auto'}
         ${className}
+        ${disabled ? 'opacity-50 cursor-not-allowed' : ''} // Add styling for disabled state
       `}
     >
       {/* Left icon */}
