@@ -1,7 +1,6 @@
 import RomanticNavbar from '@/components/main/RomanticNavbar';
 import HeartFooter from '@/components/main/HeartFooter';
 import RomanticButton from '@/components/ui/RomanticButton';
-import { featuredProducts } from '@/lib/products';
 import Image from 'next/image'; // Import Image from Next.js
 
 export default function CartPage() {
