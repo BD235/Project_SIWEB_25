@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { updateProduct } from '@/lib/actions/actionsProducts';
 import { query } from '@/lib/db';
 
+interface CategoryRow {
+  category: string;
+}
+
 // GET handler untuk mengambil data produk by ID beserta kategori
 export async function GET(
   request: Request,
@@ -30,7 +34,7 @@ export async function GET(
       'SELECT DISTINCT category FROM products WHERE category IS NOT NULL ORDER BY category'
     );
 
-    const categories = categoriesResult.rows.map(row => row.category);
+    const categories = categoriesResult.rows.map((row: CategoryRow) => row.category);
 
     // Return produk beserta kategori
     return NextResponse.json({
