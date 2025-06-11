@@ -91,7 +91,7 @@ export default function LineChartOne() {
       y: {
         formatter: (val, { w, seriesIndex }) => {
           const seriesName = w.config.series?.[seriesIndex]?.name;
-          return seriesName === "Revenue" ? formatRupiah(val) : val;
+          return seriesName === "Revenue" ? formatRupiah(val) : val.toString(); // Ensure val is a string
         },
       },
     },
@@ -104,9 +104,12 @@ export default function LineChartOne() {
     yaxis: {
       labels: {
         style: { fontSize: "12px", colors: ["#6B7280"] },
-        formatter: (val) => val,
+        formatter: (val: number) => val.toString(), // Ensure the formatter returns a string
       },
-      title: { text: "", style: { fontSize: "0px" } },
+      title: {
+        text: "Value", // Set a title for the y-axis
+        style: { fontSize: "14px", color: "#6B7280" }, // Optional styling for the title
+      },
     },
     responsive: [], // Disable resizing
   };
