@@ -40,22 +40,12 @@ export interface OrderItem {
 
 export interface Order {
   id: number;
-  customer_name: string;  // sesuaikan dengan kolom di database, misal nama_customer
-  // customer_email: string;  // kalau gak ada di db bisa dihapus dulu atau ditambahkan nanti
-  delivery_option?: string;  // kalau memang ada field ini di db, kalau gak hapus dulu
-  occasion?: string;         // optional, sesuai field db
-  delivery_date?: string;    // optional, sesuai field db
-  total_price: number;       // kalau di db fieldnya total, pakai nama yang sama supaya konsisten
-  status: string;            // status order: 'Processing', 'Shipped', dll
-  order_date?: string;       // tanggal order
+  customer_name: string;  // Adjust according to your database schema
+  delivery_option?: string;  
+  occasion?: string;         
+  delivery_date?: string;    
+  total_price: number;       
+  status: string;            
+  order_date?: string;       
   items?: OrderItem[];
-}
-
-declare module 'pg' {
-  export class Pool {
-    constructor(config: any);
-    connect(): Promise<any>;
-    query(text: string, params?: any[]): Promise<any>;
-    release(): void;
-  }
 }
