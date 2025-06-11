@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
@@ -41,6 +42,7 @@ export default function LineChartOne() {
         console.error("Failed to fetch sales data:", error);
       }
     }
+
     fetchData();
   }, []);
 
@@ -106,10 +108,11 @@ export default function LineChartOne() {
       },
       title: { text: "", style: { fontSize: "0px" } },
     },
+    responsive: [], // Disable resizing
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       <ReactApexChart options={options} series={series} type="area" height={310} />
     </div>
   );

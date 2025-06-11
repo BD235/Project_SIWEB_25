@@ -1,22 +1,21 @@
-// components/admin/TransactionsList.tsx (Complete)
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import RomanticButton from '@/components/ui/RomanticButton';
 import { EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { deleteTransaction } from '@/lib/transactionActions';
+import { deleteTransaction } from '@/lib/actions/transactionActions';
 import Alert from '@/components/ui/Alert';
 import Pagination from '@/components/ui/Pagination';
+import TransactionsSkeleton from '@/components/admin/skeleton/TransactionsSkeleton';
 
 interface Transaction {
   id_transaksi: number;
-  id_customer: number;
-    nama_customer: string;
-  tanggal: string;
+  nama_customer: string;
+  jenis_produk: string;
+  jumlah: number;
   total_revenue: number;
-  status: string;
   formatted_date: string;
+  status: string;
 }
 
 interface TransactionsListProps {
@@ -97,7 +96,6 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
     const statusStyles = {
       'Pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
       'Processing': 'bg-blue-100 text-blue-800 border-blue-200',
-
     };
 
     return (
@@ -117,27 +115,11 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
   };
 
   if (loading) {
-    return (
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="animate-pulse space-y-4">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="flex items-center space-x-4 py-4">
-              <div className="h-4 bg-gray-200 rounded w-16"></div>
-              <div className="h-4 bg-gray-200 rounded w-20"></div>
-              <div className="h-4 bg-gray-200 rounded w-24"></div>
-              <div className="h-4 bg-gray-200 rounded w-32"></div>
-              <div className="h-4 bg-gray-200 rounded w-20"></div>
-              <div className="h-8 bg-gray-200 rounded w-24"></div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
+    return <TransactionsSkeleton />;
   }
 
   return (
     <div className="space-y-6">
-      {/* Alert */}
       {alert && (
         <Alert
           type={alert.type}
@@ -147,7 +129,6 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
         />
       )}
 
-      {/* Transactions Table */}
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
         {transactions.length === 0 ? (
           <div className="p-6 text-center text-gray-500">
@@ -168,62 +149,25 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
               <table className="w-full">
                 <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Transaction ID
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Customer
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Total Revenue
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Transaction ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Revenue</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {transactions.map((transaction) => (
                     <tr key={transaction.id_transaksi} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        #{transaction.id_transaksi}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {transaction.nama_customer}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                        {transaction.formatted_date}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {formatCurrency(transaction.total_revenue)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {getStatusBadge(transaction.status)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex items-center space-x-2">
-
-                          <Link
-                            href={`/admin/transaction/${transaction.id_transaksi}/edit`}
-                            className="text-green-600 hover:text-green-800 p-1 rounded"
-                            title="Edit Transaction"
-                          >
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(transaction.id_transaksi)}
-                            className="text-red-600 hover:text-red-800 p-1 rounded"
-                            title="Delete Transaction"
-                          >
-                            <TrashIcon className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{transaction.id_transaksi}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700">{transaction.nama_customer}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700">{transaction.jenis_produk}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700">{transaction.jumlah}</td>
+                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{formatCurrency(transaction.total_revenue)}</td>
+                      <td className="px-6 py-4 text-sm text-gray-700">{transaction.formatted_date}</td>
+                      <td className="px-6 py-4">{getStatusBadge(transaction.status)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -235,51 +179,20 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
               {transactions.map((transaction) => (
                 <div key={transaction.id_transaksi} className="p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-900">
-                      Transaction #{transaction.id_transaksi}
-                    </span>
+                    <span className="text-sm font-medium text-gray-900">Transaction #{transaction.id_transaksi}</span>
                     {getStatusBadge(transaction.status)}
                   </div>
-                  
                   <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex justify-between">
-                      <span>Customer:</span>
-                      <span className="font-medium">{transaction.nama_customer}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Date:</span>
-                      <span className="font-medium">{transaction.formatted_date}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Total Revenue:</span>
-                      <span className="font-medium text-gray-900">
-                        {formatCurrency(transaction.total_revenue)}
-                      </span>
-                    </div>
+                    <div className="flex justify-between"><span>Customer:</span><span className="font-medium">{transaction.nama_customer}</span></div>
+                    <div className="flex justify-between"><span>Product:</span><span className="font-medium">{transaction.jenis_produk}</span></div>
+                    <div className="flex justify-between"><span>Qty:</span><span className="font-medium">{transaction.jumlah}</span></div>
+                    <div className="flex justify-between"><span>Total Revenue:</span><span className="font-medium text-gray-900">{formatCurrency(transaction.total_revenue)}</span></div>
+                    <div className="flex justify-between"><span>Date:</span><span className="font-medium">{transaction.formatted_date}</span></div>
                   </div>
-
                   <div className="flex items-center justify-end space-x-2 pt-2">
-                    <Link
-                      href={`/admin/transaction/${transaction.id_transaksi}`}
-                      className="text-blue-600 hover:text-blue-800 p-2 rounded"
-                      title="View Details"
-                    >
-                      <EyeIcon className="w-4 h-4" />
-                    </Link>
-                    <Link
-                      href={`/admin/transaction/${transaction.id_transaksi}/edit`}
-                      className="text-green-600 hover:text-green-800 p-2 rounded"
-                      title="Edit Transaction"
-                    >
-                      <PencilIcon className="w-4 h-4" />
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(transaction.id_transaksi)}
-                      className="text-red-600 hover:text-red-800 p-2 rounded"
-                      title="Delete Transaction"
-                    >
-                      <TrashIcon className="w-4 h-4" />
-                    </button>
+                    <Link href={`/admin/transaction/${transaction.id_transaksi}`} className="text-blue-600 hover:text-blue-800 p-2 rounded" title="View Details"><EyeIcon className="w-4 h-4" /></Link>
+                    <Link href={`/admin/transaction/${transaction.id_transaksi}/edit`} className="text-green-600 hover:text-green-800 p-2 rounded" title="Edit Transaction"><PencilIcon className="w-4 h-4" /></Link>
+                    <button onClick={() => handleDelete(transaction.id_transaksi)} className="text-red-600 hover:text-red-800 p-2 rounded" title="Delete Transaction"><TrashIcon className="w-4 h-4" /></button>
                   </div>
                 </div>
               ))}
@@ -288,24 +201,16 @@ export default function TransactionsList({ query, currentPage }: TransactionsLis
         )}
       </div>
 
-        {pagination.totalPages > 1 && (
+      {pagination.totalPages > 1 && (
         <div className="flex justify-center">
-            <Pagination
+          <Pagination
             currentPage={pagination.currentPage}
             totalPages={pagination.totalPages}
             baseUrl="/admin/transaction"
             searchParams={query ? { query } : {}}
-            />
+          />
         </div>
-        )}
-
-      {/* Results Summary */}
-      <div className="text-sm text-gray-600 text-center">
-        Showing {transactions.length} of {pagination.totalItems} transactions
-        {query && (
-          <span> for "<strong>{query}</strong>"</span>
-        )}
-      </div>
+      )}
     </div>
   );
 }

@@ -2,8 +2,8 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { deleteProduct } from '@/lib/actions';
-import AdminProductsSkeleton from '@/components/admin/AdminProductsSkeleton';
+import { deleteProduct } from '@/lib/actions/actionsProducts';
+import AdminProductsSkeleton from '@/components/admin/skeleton/AdminProductsSkeleton';
 import Pagination from '@/components/ui/Pagination';
 import Link from 'next/link';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';

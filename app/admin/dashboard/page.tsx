@@ -4,7 +4,7 @@
 
 import React, { Suspense } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
-import AdminDashboardSkeleton from '@/components/admin/AdminDashboardSkeleton';
+import AdminDashboardSkeleton from '@/components/admin/skeleton/AdminDashboardSkeleton';
 import AnalyticMetrics from '@/components/admin/AnalyticMetrics';
 
 export default function AdminDashboardPage() {

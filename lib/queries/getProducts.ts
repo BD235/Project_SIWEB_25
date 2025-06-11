@@ -1,5 +1,5 @@
 import { query } from '../db';
-import type { Product } from '../types/ndex';
+import type { Product } from '../types/index';
 
 const allowedCategories = ['romantic', 'anniversary', 'valentine', 'lebaran'];
 
@@ -62,4 +62,27 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     [allowedCategories]
   );
   return res.rows;
+}
+
+export async function getAllProducts() {
+  try {
+    const result = await query(`
+      SELECT 
+        id,
+        name,
+        price
+      FROM products 
+      WHERE is_deleted = false
+      ORDER BY name ASC
+    `);
+
+    return result.rows.map(row => ({
+      id: row.id,
+      name: row.name,
+      price: row.price
+    }));
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw new Error('Failed to fetch products');
+  }
 }

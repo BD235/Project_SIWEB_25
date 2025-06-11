@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FaBirthdayCake, FaShoppingCart, FaUsers, FaDollarSign } from 'react-icons/fa';
 import LineChartOne from "@/components/charts/line/LineChartOne";
 import TopProductChart from "@/components/charts/bar/TopProductChart";
-import Loading from '@/app/admin/loading';
+import Loading from '@/components/admin/skeleton/AdminDashboardSkeleton';
 
 interface Stat {
   title: string;

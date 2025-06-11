@@ -31,7 +31,7 @@ async function fetchProduct(id: string): Promise<{ product: ProductData; categor
 }
 
 // import server action updateProduct dari file actions (server)
-import { updateProduct } from '@/lib/actions';
+import { updateProduct } from '@/lib/actions/actionsProducts';
 
 export default function ProductEditPage() {
   const router = useRouter();

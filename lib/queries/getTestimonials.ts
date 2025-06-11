@@ -1,6 +1,6 @@
 // lib/queries/getTestimonials.ts
 import { query } from '../db';
-import type { Testimonial } from '../types/ndex';
+import type { Testimonial } from '../types/index';
 
 export async function getTestimonials(): Promise<Testimonial[]> {
   const res = await query(

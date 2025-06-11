@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateProduct } from '@/lib/actions';
+import { updateProduct } from '@/lib/actions/actionsProducts';
 import { query } from '@/lib/db';
 
 // GET handler untuk mengambil data produk by ID beserta kategori

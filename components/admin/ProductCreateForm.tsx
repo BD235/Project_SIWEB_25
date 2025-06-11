@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { createProduct } from '@/lib/actions';
+import { createProduct } from '@/lib/actions/actionsProducts';
 import RomanticButton from '@/components/ui/RomanticButton';
 import LoveInput from '@/components/ui/LoveInput';
 import Link from 'next/link';

@@ -15,24 +15,19 @@ export default function AdminTransactionPage() {
     <AdminLayout title="Transaction Management">
       <div className="w-full">
         {/* Header */}
-        <div className="flex w-full items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Transaction Management</h1>
-          </div>
+        <div className="flex items-center justify-between mb-6 ">
+          {/* Search Bar */}
+          <SearchInput placeholder="Search transactions...." />
 
           {/* Add Transaction Button */}
-          <Link href="/admin/transaction/create">
+          <Link href="/admin/transaction/create" className="ml-4">
             <RomanticButton className="flex items-center gap-2">
-              <PlusIcon className="w-4 h-4" />
               Add Transaction
             </RomanticButton>
           </Link>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <SearchInput placeholder="Search transactions by ID, customer ID, status, or amount..." />
-        </div>
+
 
         {/* Transactions List */}
         <Suspense fallback={<TransactionsSkeleton />}>

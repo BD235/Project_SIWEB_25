@@ -1,6 +1,6 @@
 // lib/queries/getProductById.ts
 import { query } from '../db';
-import type { Product } from '../types/ndex';
+import type { Product } from '../types';
 
 export async function getProductById(id: number): Promise<Product | null> {
   const res = await query(

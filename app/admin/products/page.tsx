@@ -3,7 +3,7 @@
 
 import React, { Suspense } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
-import AdminProductsSkeleton from '@/components/admin/AdminProductsSkeleton';
+import AdminProductsSkeleton from '@/components/admin/skeleton/AdminProductsSkeleton';
 import ProductsList from '@/components/admin/ProductsList';
 import SearchInput from '@/components/ui/SearchInput';
 import RomanticButton from '@/components/ui/RomanticButton';
@@ -15,21 +15,17 @@ export default function AdminProductsPage() {
     <AdminLayout title="Product Management">
       <div className="w-full">
         {/* Header */}
-        <div className="flex w-full items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Product Management</h1>
+      <div className="flex items-center justify-between mb-6 pd-4">
+        {/* Search Bar di sebelah kiri */}
+        <SearchInput placeholder="Search products...." />
 
-          {/* Add Product Button */}
-          <Link href="/admin/products/create">
-            <RomanticButton className="flex items-center gap-2">
-              Add Product
-            </RomanticButton>
-          </Link>
-        </div>
-
-        {/* Search Bar */}
-        <div className="mb-6">
-          <SearchInput placeholder="Search products by name, category, or description..." />
-        </div>
+        {/* Add Product Button di sebelah kanan */}
+        <Link href="/admin/products/create" className="ml-4">
+          <RomanticButton className="flex items-center gap-2">
+            Add Product
+          </RomanticButton>
+        </Link>
+      </div>
 
         {/* Products List */}
         <Suspense fallback={<AdminProductsSkeleton />}>

@@ -32,17 +32,34 @@ export default function TopProductChart() {
     chart: {
       type: "bar",
       height: 350,
-      toolbar: { show: false },
+      toolbar: { show: true },
     },
     plotOptions: {
       bar: {
-        horizontal: false,
+        horizontal: true,
         borderRadius: 5,
-        columnWidth: "10%", // kecilkan ini untuk rapatkan bar
+        columnWidth: "20%",
       },
     },
     dataLabels: { enabled: false },
-    xaxis: { categories },
+    tooltip: {
+      enabled: true,
+      x: {
+        formatter: (_, { dataPointIndex }) => categories[dataPointIndex] || "",
+      },
+    },
+    xaxis: {
+      categories,
+      labels: {
+        show: true, // <- Sembunyikan nama di bawah chart
+      },
+      axisTicks: {
+        show: true,
+      },
+      axisBorder: {
+        show: true,
+      },
+    },
     grid: {
       padding: {
         left: 0,
@@ -56,12 +73,6 @@ export default function TopProductChart() {
       <div id="top-products-chart" className="min-w-[1000px]">
         <ReactApexChart options={options} series={series} type="bar" height={350} />
       </div>
-      <style jsx>{`
-        /* Optional: tambah CSS untuk kurangi jarak antar bar jika perlu */
-        .apexcharts-bar-area .apexcharts-bar-series .apexcharts-bar {
-          margin-right: 1px !important;
-        }
-      `}</style>
     </div>
   );
 }
