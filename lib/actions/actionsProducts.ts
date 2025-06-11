@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { query } from '@/lib/db';
 
-// Schema validasi yang diperbaiki dengan size validation
+// Schema validasi untuk produk
 const ProductSchema = z.object({
   id: z.number(),
   name: z.string().min(1, 'Name is required').max(255, 'Name too long'),
@@ -23,7 +23,6 @@ const ProductSchema = z.object({
   is_best_seller: z.boolean().optional(),
   rating: z.number().optional(),
   review_count: z.number().optional(),
-  is_deleted: z.boolean().optional(),
 });
 
 const CreateProduct = ProductSchema.omit({ id: true });
@@ -65,7 +64,6 @@ export async function createProduct(formData: FormData) {
 
 export async function updateProduct(id: number, formData: FormData) {
   try {
-    // Validasi input
     const validatedData = UpdateProduct.parse({
       name: formData.get('name'),
       description: formData.get('description') || '',
@@ -78,13 +76,11 @@ export async function updateProduct(id: number, formData: FormData) {
 
     const { name, description, price, stock, category, image, size } = validatedData;
 
-    // Cek apakah produk ada
     const existingProduct = await query('SELECT id FROM products WHERE id = $1', [id]);
     if (!existingProduct.rows.length) {
       throw new Error(`Product with ID ${id} not found`);
     }
 
-    // Update produk
     const result = await query(`
       UPDATE products
       SET name = $1, description = $2, price = $3, stock = $4, category = $5, image = $6, size = $7, updated_at = NOW()
@@ -124,3 +120,27 @@ export async function deleteProduct(id: number) {
     throw new Error(`Failed to delete product: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }
+
+export async function getAllProducts() {
+  try {
+    const result = await query(`
+      SELECT 
+        id,
+        name,
+        price
+      FROM products 
+      ORDER BY name ASC
+    `);
+
+    return result.rows.map(row => ({
+      id: row.id,
+      name: row.name,
+      price: row.price
+    }));
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw new Error('Failed to fetch products');
+  }
+}
+
+// Fungsi transaksi dan lainnya tetap sama
