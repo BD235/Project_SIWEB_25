@@ -12,6 +12,9 @@ https://github.com/BD235/Project_SIWEB_25.git
 Link Deploy:
 https://project-siweb-25-tag7.vercel.app/
 
+Username user/admin : user123/admin123
+Password user/admin : 12345
+
 Bagian yang sudah dikerjakan tiap anggota:
 1. Yosia Agnesa Togatorop - 231712616
    • Pembuatan struktur halaman utama (home)
