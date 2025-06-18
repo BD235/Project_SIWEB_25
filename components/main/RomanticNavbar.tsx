@@ -39,7 +39,7 @@ export default function RomanticNavbar() {
               href="/main/about"  
               className="px-4 py-2 rounded-md text-lg font-medium text-rose-700 hover:bg-rose-50 hover:text-rose-900" 
             >
-              Abaut Us
+              About Us
             </Link>
             <Link 
               href="/main/contact"   
